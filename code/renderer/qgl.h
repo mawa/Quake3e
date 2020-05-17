@@ -40,6 +40,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #elif defined( __linux__ ) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined( __sun )
 #include <GL/gl.h>
 #include <GL/glx.h>
+#elif defined(__APPLE__)
+#include <OpenGL/gl.h>
+//#include <OpenGL/glx.h>
 #endif
 
 #ifndef APIENTRY
@@ -262,9 +265,10 @@ typedef char GLchar;
 	GLE( PROC,  wglGetProcAddress, LPCSTR ) \
 	GLE( BOOL,  wglMakeCurrent, HDC, HGLRC )
 
-#ifdef _WIN32
+#if defined(_WIN32)
 #define QGL_Swp_PROCS \
 	GLE( BOOL,	wglSwapIntervalEXT, int interval )
+#elif defined(__APPLE__)
 #else
 #define QGL_Swp_PROCS \
 	GLE( void,	glXSwapIntervalEXT, Display *dpy, GLXDrawable drawable, int interval ) \
@@ -285,7 +289,7 @@ typedef char GLchar;
 #ifdef _WIN32
 	QGL_Win32_PROCS;
 #else // assume in opposition to win32
-	QGL_LinX11_PROCS;
+	//QGL_LinX11_PROCS;
 #endif
 #undef GLE
 

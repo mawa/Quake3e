@@ -548,6 +548,12 @@ static qboolean GLimp_StartDriverAndSetMode( int mode, const char *modeFS, qbool
 		Com_Printf( "SDL using driver \"%s\"\n", driverName );
 	}
 
+    
+    if (SDL_Vulkan_LoadLibrary("libMoltenVK.dylib")) {
+        Com_Printf("SDL_VulkanLoadLibrary failed: %s\n", SDL_GetError());
+    }
+    
+    
 	err = GLW_SetMode( mode, modeFS, fullscreen, vulkan );
 
 	switch ( err )

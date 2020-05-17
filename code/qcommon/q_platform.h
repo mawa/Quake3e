@@ -120,7 +120,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // =============================== BSD =====================================
 
-#if defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__)
+#if defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined(__APPLE__)
 
 #include <sys/types.h>
 #include <machine/endian.h>
@@ -132,6 +132,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define OS_STRING "netbsd"
 #elif defined (__OpenBSD__)
 #define OS_STRING "openbsd"
+#elif defined (__APPLE__)
+#define OS_STRING "macos"
 #endif
 
 #define ID_INLINE inline

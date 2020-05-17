@@ -3673,7 +3673,7 @@ void Com_Init( char *commandLine ) {
 	}
 	Com_Printf( "%s\n", Cvar_VariableString( "sys_cpustring" ) );
 #endif
-#if !defined(__FreeBSD__) && !defined(__OpenBSD__)
+#if !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__APPLE__)
 	if ( com_affinityMask->integer )
 		Sys_SetAffinityMask( com_affinityMask->integer );
 #endif
@@ -3938,7 +3938,7 @@ void Com_Frame( qboolean noDelay ) {
 		}
 		com_viewlog->modified = qfalse;
 	}
-#if !defined(__FreeBSD__) && !defined(__OpenBSD__)
+#if !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__APPLE__)
 	if ( com_affinityMask->modified ) {
 		Cvar_Get( "com_affinityMask", "0", CVAR_ARCHIVE );
 		com_affinityMask->modified = qfalse;

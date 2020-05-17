@@ -21,11 +21,11 @@ endif
 BUILD_CLIENT     = 1
 BUILD_SERVER     = 1
 
-USE_SDL          = 0
+USE_SDL          = 1
 USE_CURL         = 1
 USE_LOCAL_HEADERS= 0
-USE_VULKAN       = 0
-#USE_VULKAN_API   = 0
+USE_VULKAN       = 1
+#USE_VULKAN_API   = 1
 
 USE_RENDERER_DLOPEN = 0
 
@@ -190,7 +190,7 @@ ifeq ($(X11_LIBS),)
 X11_LIBS = -lX11
 endif
 ifeq ($(SDL_LIBS),)
-SDL_LIBS = -lSDL2
+SDL_LIBS = -framework SDL2 #lSDL2
 endif
 
 # extract version info
@@ -199,16 +199,16 @@ VERSION=$(shell grep "\#define Q3_VERSION" $(CMDIR)/q_shared.h | \
 
 # common qvm definition
 ifeq ($(ARCH),x86_64)
-  HAVE_VM_COMPILED = true
+  HAVE_VM_COMPILED = false
 else
 ifeq ($(ARCH),x86)
-  HAVE_VM_COMPILED = true
+  HAVE_VM_COMPILED = false
 else
   HAVE_VM_COMPILED = false
 endif
 endif
 
-BASE_CFLAGS =
+BASE_CFLAGS =  -framework OpenGL -framework SDL2 -I ./code/libsdl/SDL2.framework/Headers
 
 ifneq ($(HAVE_VM_COMPILED),true)
   BASE_CFLAGS += -DNO_VM_COMPILED
@@ -511,6 +511,11 @@ ifeq ($(PLATFORM),netbsd)
   BUILD_CLIENT = 0
 
 else # ifeq netbsd
+
+ ifeq ($(USE_SDL),1)
+    BASE_CFLAGS += $(SDL_INCLUDE)
+    CLIENT_LDFLAGS += -F./code/libsdl -framework SDL2 -framework MoltenVK -rpath .
+  endif
 
 #############################################################################
 # SETUP AND BUILD -- GENERIC

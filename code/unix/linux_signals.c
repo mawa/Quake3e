@@ -60,8 +60,8 @@ void InitSig( void )
 	signal( SIGILL, signal_handler );
 	signal( SIGTRAP, signal_handler );
 	signal( SIGIOT, signal_handler );
-	signal( SIGBUS, signal_handler );
+	//signal( SIGBUS, signal_handler );
 	signal( SIGFPE, signal_handler );
-	signal( SIGSEGV, signal_handler );
+	//signal( SIGSEGV, signal_handler );
 	signal( SIGTERM, signal_handler );
 }
